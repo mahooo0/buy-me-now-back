@@ -139,7 +139,9 @@ mongoose
     .then(() => console.log('MongoDB connected'))
     .catch((err) => console.error('MongoDB connection error:', err));
 // MongoDB connection-end
-
+app.get('/', (req, res) => {
+    res.send('Hi');
+});
 app.use('/shemaControl', ShemaRouter);
 app.use('/DataControl', DataRouter);
 app.use('/usersControll', userRoutes);
