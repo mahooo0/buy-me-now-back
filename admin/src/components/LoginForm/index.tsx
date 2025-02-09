@@ -62,7 +62,7 @@ export function LoginForm({
                         ).value;
                         setloading(true);
                         await instanceAxios
-                            .post('usersControll/login', {
+                            .post('users/login', {
                                 email: email,
                                 password: password,
                             })

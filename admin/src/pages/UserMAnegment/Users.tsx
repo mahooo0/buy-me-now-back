@@ -19,20 +19,16 @@ export default function Users() {
     const [lang] = useRecoilState(languageState);
     ///make it state qil
 
-    const { data: Users } = GETRequest<any>(
-        'usersControll',
-        'usersControll',
-        []
-    );
+    const { data: Users } = GETRequest<any>('users', 'users', []);
 
     const handleSubmit = (values: Record<string, any>) => {
         console.log('Form Submitted:', values);
         instanceAxios
-            .post('usersControll/register', values)
+            .post('users/', values)
             .then(() => {
                 toast.success('User sucsesfully aded');
                 setIsForumOpen(false);
-                queryClient.invalidateQueries({ queryKey: ['usersControll'] });
+                queryClient.invalidateQueries({ queryKey: ['users'] });
             })
             .catch((error) => {
                 console.log(error);
@@ -116,12 +112,12 @@ export default function Users() {
                 isOpen={isDeletemodalOpen}
                 onDelete={async () => {
                     await instanceAxios
-                        .delete(`usersControll/${id}`)
+                        .delete(`users/${id}`)
                         .then(() => {
                             toast.success('user sucsesfully deleted');
                             setIsDeletemodalOpen(false);
                             queryClient.invalidateQueries({
-                                queryKey: ['usersControll'],
+                                queryKey: ['users'],
                             });
                         })
                         .catch((error) => {

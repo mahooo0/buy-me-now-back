@@ -114,6 +114,7 @@ export default function Icons() {
                     queryClient.invalidateQueries({
                         queryKey: ['logo'],
                     });
+                    setid(0);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -214,13 +215,14 @@ export default function Icons() {
                 isOpen={isDeletemodalOpen}
                 onDelete={async () => {
                     await instanceAxios
-                        .delete(`seo/${id}`)
+                        .delete(`logo/${id}`)
                         .then(() => {
                             toast.success('meta sucsesfully deleted');
                             setIsDeletemodalOpen(false);
                             queryClient.invalidateQueries({
-                                queryKey: ['seo'],
+                                queryKey: ['logo'],
                             });
+                            setid(0);
                         })
                         .catch((error) => {
                             console.log(error);

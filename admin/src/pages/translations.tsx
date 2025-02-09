@@ -88,11 +88,11 @@ export default function Translations() {
                     toast.error(error.response.data.error);
                 });
         } else {
-            const changingData = translations.find(
-                (item: any) => item._id === id
-            );
+            // const changingData = translations.find(
+            //     (item: any) => item._id === id
+            // );
             instanceAxios
-                .put(`translations/${changingData.key}`, newValues)
+                .put(`translations/${id}`, newValues)
                 .then(() => {
                     toast.success('translation sucsesfully updated');
                     setIsForumOpen(false);

@@ -56,30 +56,26 @@ const data = {
         },
     ],
     navMain: [
-        {
-            title: 'Exsample',
-            url: '/exmplCategory',
-            icon: SquareTerminal,
-            isActive: true,
-            items: [
-                {
-                    title: 'Category',
-                    url: '/exmplCategory',
-                },
-                {
-                    title: 'Sub Category',
-                    url: '/subCategory',
-                },
-                {
-                    title: 'Data Exsample',
-                    url: '/data',
-                },
-                // {
-                //     title: 'Settings',
-                //     url: '#',
-                // },
-            ],
-        },
+        // {
+        //     title: 'Exsample',
+        //     url: '/exmplCategory',
+        //     icon: SquareTerminal,
+        //     isActive: true,
+        //     items: [
+        //         {
+        //             title: 'Category',
+        //             url: '/exmplCategory',
+        //         },
+        //         {
+        //             title: 'Sub Category',
+        //             url: '/subCategory',
+        //         },
+        //         {
+        //             title: 'Data Exsample',
+        //             url: '/data',
+        //         },
+        //     ],
+        // },
     ],
     projects: [
         {
@@ -107,11 +103,16 @@ const data = {
             url: '/icons',
             icon: AppWindow,
         },
-        {
-            name: 'Exsample Category',
-            url: '/exmplCategory',
-            icon: AppWindow,
-        },
+        // {
+        //     name: 'Exsample Category',
+        //     url: '/exmplCategory',
+        //     icon: AppWindow,
+        // },
+        // {
+        //     name: 'Home hero',
+        //     url: '/Home_hero',
+        //     icon: AppWindow,
+        // },
         // {
         //     name: 'Sales & Marketing',
         //     url: '#',
