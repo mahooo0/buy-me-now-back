@@ -121,35 +121,63 @@ export function FileInput({
             </div>
 
             {/* Preview Section */}
-            {value.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {value.map((item, index) => (
-                        <div key={index} className="relative group max-w-40">
-                            <div className="aspect-square relative rounded-lg overflow-hidden border max-w-40">
-                                <img
-                                    src={
-                                        getImageSrc(item) || '/placeholder.svg'
-                                    }
-                                    alt={`Preview ${index + 1}`}
-                                    className="object-cover w-full h-full"
-                                />
-                            </div>
-                            <Button
-                                variant="destructive"
-                                size="icon"
-                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDelete(index);
-                                }}
-                                aria-label="Remove image"
-                            >
-                                <X className="h-4 w-4" />
-                            </Button>
-                        </div>
-                    ))}
-                </div>
-            )}
+            {Array.isArray(value)
+                ? value.length > 0 && (
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                          {value.map((item, index) => (
+                              <div
+                                  key={index}
+                                  className="relative group max-w-40"
+                              >
+                                  <div className="aspect-square relative rounded-lg overflow-hidden border max-w-40">
+                                      <img
+                                          src={
+                                              getImageSrc(item) ||
+                                              '/placeholder.svg'
+                                          }
+                                          alt={`Preview ${index + 1}`}
+                                          className="object-cover w-full h-full"
+                                      />
+                                  </div>
+                                  <Button
+                                      variant="destructive"
+                                      size="icon"
+                                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                      onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleDelete(index);
+                                      }}
+                                      aria-label="Remove image"
+                                  >
+                                      <X className="h-4 w-4" />
+                                  </Button>
+                              </div>
+                          ))}
+                      </div>
+                  )
+                : value && (
+                      <div className="relative group max-w-40">
+                          <div className="aspect-square relative rounded-lg overflow-hidden border max-w-40">
+                              <img
+                                  src={getImageSrc(value) || '/placeholder.svg'}
+                                  alt="Preview"
+                                  className="object-cover w-full h-full"
+                              />
+                          </div>
+                          <Button
+                              variant="destructive"
+                              size="icon"
+                              className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                              onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDelete(0);
+                              }}
+                              aria-label="Remove image"
+                          >
+                              <X className="h-4 w-4" />
+                          </Button>
+                      </div>
+                  )}
         </div>
     );
 }

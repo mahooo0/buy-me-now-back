@@ -143,8 +143,8 @@ const invoices = [
 
 type Structure = {
     HeadTitle: string;
-    key: string[];
-    type: 'str' | 'img';
+    key: (string | number)[];
+    type: 'str' | 'img' | 'video';
 };
 interface Props {
     structure: Structure[];
@@ -219,6 +219,24 @@ export function TableDemo({ structure, data, onAdd, onEdit, onDelete }: Props) {
                                                 }
                                                 className="max-w-[70px]"
                                                 alt=""
+                                            />
+                                        </TableCell>
+                                    );
+                                } else if (StructureItem.type === 'video') {
+                                    return (
+                                        <TableCell
+                                            className="text-start"
+                                            key={i}
+                                        >
+                                            <video
+                                                src={
+                                                    dataItem[
+                                                        StructureItem.key[0]
+                                                    ]
+                                                }
+                                                className="max-w-[70px]"
+                                                controls={false}
+                                                autoPlay
                                             />
                                         </TableCell>
                                     );

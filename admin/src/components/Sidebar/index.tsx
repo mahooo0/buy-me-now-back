@@ -56,26 +56,46 @@ const data = {
         },
     ],
     navMain: [
-        // {
-        //     title: 'Exsample',
-        //     url: '/exmplCategory',
-        //     icon: SquareTerminal,
-        //     isActive: true,
-        //     items: [
-        //         {
-        //             title: 'Category',
-        //             url: '/exmplCategory',
-        //         },
-        //         {
-        //             title: 'Sub Category',
-        //             url: '/subCategory',
-        //         },
-        //         {
-        //             title: 'Data Exsample',
-        //             url: '/data',
-        //         },
-        //     ],
-        // },
+        {
+            title: 'About',
+            url: '/',
+            icon: SquareTerminal,
+            isActive: true,
+            items: [
+                {
+                    title: 'About developer',
+                    url: '/about-developer',
+                },
+                {
+                    title: 'About hero',
+                    url: '/about-hero',
+                },
+                {
+                    title: 'About Infos',
+                    url: '/about-infos',
+                },
+                {
+                    title: 'About Bunner First',
+                    url: '/about-bunner-first',
+                },
+                {
+                    title: 'About Bunner Second',
+                    url: '/about-bunner-second',
+                },
+            ],
+        },
+        {
+            title: 'Product',
+            url: '/',
+            icon: SquareTerminal,
+            isActive: true,
+            items: [
+                {
+                    title: 'Product category',
+                    url: '/product-category',
+                },
+            ],
+        },
     ],
     projects: [
         {
@@ -86,12 +106,17 @@ const data = {
         {
             name: 'Admin Users',
             url: '/users',
-            icon: SquareTerminal,
+            icon: Bot,
         },
         {
             name: 'Translations',
             url: '/translations',
-            icon: Languages,
+            icon: BookOpen,
+        },
+        {
+            name: 'Contact Hero',
+            url: '/contact-hero',
+            icon: BookOpen,
         },
         {
             name: 'Seo',
@@ -103,26 +128,31 @@ const data = {
             url: '/icons',
             icon: AppWindow,
         },
-        // {
-        //     name: 'Exsample Category',
-        //     url: '/exmplCategory',
-        //     icon: AppWindow,
-        // },
-        // {
-        //     name: 'Home hero',
-        //     url: '/Home_hero',
-        //     icon: AppWindow,
-        // },
-        // {
-        //     name: 'Sales & Marketing',
-        //     url: '#',
-        //     icon: PieChart,
-        // },
-        // {
-        //     name: 'Travel',
-        //     url: '#',
-        //     icon: Map,
-        // },
+        {
+            name: 'Home Hero',
+            url: '/home-hero',
+            icon: AudioWaveform,
+        },
+        {
+            name: 'Home Product bunner',
+            url: '/Home-Product-bunner',
+            icon: Command,
+        },
+        {
+            name: 'Home Contact bunner',
+            url: '/contact-bunner',
+            icon: Command,
+        },
+        {
+            name: 'Blogs',
+            url: '/blogs',
+            icon: Command,
+        },
+        {
+            name: 'Contact infos',
+            url: '/contact-infos',
+            icon: Command,
+        },
     ],
 };
 

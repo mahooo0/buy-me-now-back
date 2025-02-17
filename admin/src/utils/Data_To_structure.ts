@@ -77,6 +77,52 @@ const dataFromBackend: DataItem[] = [
         name: 'Jane Doe',
     },
 ];
+export function transformObject<T extends Record<string, any>>(
+    obj: T
+): Record<string, any> {
+    const transformed: Record<string, any> = {};
+
+    Object.entries(obj).forEach(([key, value]) => {
+        if (key.includes('_')) {
+            const [prefix, lang] = key.split('_'); // Split key into prefix and language
+            if (lang) {
+                // Ensure the prefix exists in the transformed object
+                if (!transformed[prefix]) {
+                    transformed[prefix] = {};
+                }
+                // Assign the value under the corresponding language key
+                transformed[prefix][lang] = value;
+            }
+        } else {
+            // Copy other keys as-is (e.g., email, name, etc.)
+            transformed[key] = value;
+        }
+    });
+
+    return transformed;
+}
+export function reverseTransformObject<T extends Record<string, any>>(
+    obj: T
+): Record<string, any> {
+    const reversed: Record<string, any> = {};
+
+    Object.entries(obj).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+            // If value is an array, return it as-is
+            reversed[key] = value;
+        } else if (typeof value === 'object' && value !== null) {
+            // Iterate over each language in the value object
+            Object.entries(value).forEach(([lang, langValue]) => {
+                reversed[`${key}_${lang}`] = langValue;
+            });
+        } else {
+            // Copy non-object values as-is
+            reversed[key] = value;
+        }
+    });
+
+    return reversed;
+}
 
 // const lang = 'en';
 // const structure = Data_To_structure(dataFromBackend, lang);

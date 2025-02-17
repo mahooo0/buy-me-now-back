@@ -408,6 +408,9 @@ export default function Forum({
                                                     input.type ===
                                                     'multiple_video'
                                                 }
+                                                value={
+                                                    formValues[input.name] || []
+                                                }
                                                 onChange={(files) => {
                                                     handleInputChange(
                                                         input.name,

@@ -13,12 +13,23 @@ import DashboardPage from './pages/dashboard';
 import Translations from './pages/translations';
 import Seo from './pages/Seo';
 import Icons from './pages/Icons';
-import Category from './pages/Category';
 import SubCategory from './pages/SubCategory';
 
 const queryClient = new QueryClient();
 import { RecoilRoot } from 'recoil';
 import ExsampleData from './pages/Data';
+import Home_hero from './pages/Home_hero';
+import Home_Product_bunner from './pages/Home_Product_bunner';
+import ContactBunner from './pages/ContactBunner';
+import AboutDeveloper from './pages/AboutDeveloper';
+import AboutHero from './pages/AboutHero';
+import AboutInfos from './pages/AboutInfos';
+import AboutBunner1 from './pages/AboutBunner1';
+import AboutBunner2 from './pages/AboutBunner2';
+import Blogs from './pages/Blogs';
+import ContactHero from './pages/ContactHero';
+import ContactInfos from './pages/ContactInfos';
+import ProductCategory from './pages/ProductCategory';
 function App() {
     return (
         <>
@@ -71,26 +82,98 @@ function App() {
                                 }
                             />
                             <Route
-                                path="/exmplCategory"
+                                path="/home-hero"
                                 element={
                                     <Layout>
-                                        <Category />
+                                        <Home_hero />
                                     </Layout>
                                 }
                             />
                             <Route
-                                path="/subCategory"
+                                path="/Home-Product-bunner"
                                 element={
                                     <Layout>
-                                        <SubCategory />
+                                        <Home_Product_bunner />
                                     </Layout>
                                 }
                             />
                             <Route
-                                path="/data"
+                                path="/contact-bunner"
                                 element={
                                     <Layout>
-                                        <ExsampleData />
+                                        <ContactBunner />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/about-developer"
+                                element={
+                                    <Layout>
+                                        <AboutDeveloper />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/about-hero"
+                                element={
+                                    <Layout>
+                                        <AboutHero />
+                                    </Layout>
+                                }
+                            />{' '}
+                            <Route
+                                path="/about-infos"
+                                element={
+                                    <Layout>
+                                        <AboutInfos />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/about-bunner-first"
+                                element={
+                                    <Layout>
+                                        <AboutBunner1 />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/about-bunner-second"
+                                element={
+                                    <Layout>
+                                        <AboutBunner2 />
+                                    </Layout>
+                                }
+                            />{' '}
+                            <Route
+                                path="/blogs"
+                                element={
+                                    <Layout>
+                                        <Blogs />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/contact-hero"
+                                element={
+                                    <Layout>
+                                        <ContactHero />
+                                    </Layout>
+                                }
+                            />{' '}
+                            <Route
+                                path="/contact-infos"
+                                element={
+                                    <Layout>
+                                        <ContactInfos />
+                                    </Layout>
+                                }
+                            />
+                            <Route
+                                path="/product-category"
+                                element={
+                                    <Layout>
+                                        <ProductCategory />
                                     </Layout>
                                 }
                             />

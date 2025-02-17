@@ -3,74 +3,33 @@ import Forum from '@/components/Forum';
 import { TableDemo } from '@/components/Table';
 import languageState from '@/StateManegmant/atom';
 import instanceAxios from '@/utils/axios';
+import {
+    reverseTransformObject,
+    transformObject,
+} from '@/utils/Data_To_structure';
 import GETRequest from '@/utils/Get';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useRecoilState } from 'recoil';
 
-export default function Category() {
+export default function ContactBunner() {
     const [isForumOpen, setIsForumOpen] = useState(false);
-    const [isDeletemodalOpen, setIsDeletemodalOpen] = useState(false);
     const [id, setid] = useState(0);
     const queryClient = useQueryClient();
     console.log('id', id);
     const [lang] = useRecoilState(languageState);
 
-    ///make it state qil
-
-    const { data: category } = GETRequest<any>('category', 'category', []);
-    console.log('category', category);
-
-    function transformObject<T extends Record<string, any>>(
-        obj: T
-    ): Record<string, any> {
-        const transformed: Record<string, any> = {};
-
-        Object.entries(obj).forEach(([key, value]) => {
-            if (key.includes('_')) {
-                const [prefix, lang] = key.split('_'); // Split key into prefix and language
-                if (lang) {
-                    // Ensure the prefix exists in the transformed object
-                    if (!transformed[prefix]) {
-                        transformed[prefix] = {};
-                    }
-                    // Assign the value under the corresponding language key
-                    transformed[prefix][lang] = value;
-                }
-            } else {
-                // Copy other keys as-is (e.g., email, name, etc.)
-                transformed[key] = value;
-            }
-        });
-
-        return transformed;
-    }
-    function reverseTransformObject<T extends Record<string, any>>(
-        obj: T
-    ): Record<string, any> {
-        const reversed: Record<string, any> = {};
-
-        Object.entries(obj).forEach(([key, value]) => {
-            if (typeof value === 'object' && value !== null) {
-                // Iterate over each language in the value object
-                Object.entries(value).forEach(([lang, langValue]) => {
-                    // Create the key by combining the prefix and language
-                    reversed[`${key}_${lang}`] = langValue;
-                });
-            } else {
-                // Copy non-object values as-is
-                reversed[key] = value;
-            }
-        });
-
-        return reversed;
-    }
+    const { data: Hero } = GETRequest<any>(
+        'contact-bunner',
+        '/contact-bunner',
+        []
+    );
+    console.log('Hero', Hero);
 
     const handleSubmit = (values: Record<string, any>) => {
-        // const newValues = objectToFormData(values);
+        const newValues = transformObject(values);
 
-        console.log('Form Submitted:', transformObject(values));
         if (id === 0) {
             instanceAxios
                 .post('category', transformObject(values))
@@ -86,14 +45,21 @@ export default function Category() {
                     toast.error(error.response.data.error);
                 });
         } else {
-            // const changingData = seo.find((item: any) => item._id === id);
+            const ForumData = new FormData();
+            const strTitlr = JSON.stringify(newValues.title);
+            const strdescription = JSON.stringify(newValues.description);
+            console.log('Form Submitted:', strdescription);
+
+            ForumData.append('title', strTitlr);
+            ForumData.append('description', strdescription);
+            ForumData.append('image', values.image[0]);
             instanceAxios
-                .put(`category/${id}`, transformObject(values))
+                .put(`contact-bunner`, ForumData)
                 .then(() => {
                     toast.success('category sucsesfully updated');
                     setIsForumOpen(false);
                     queryClient.invalidateQueries({
-                        queryKey: ['category'],
+                        queryKey: ['/contact-bunner'],
                     });
                 })
                 .catch((error) => {
@@ -114,8 +80,8 @@ export default function Category() {
                     }}
                     inputs={[
                         {
-                            Title: 'name',
-                            name: 'name',
+                            Title: 'title',
+                            name: 'title',
                             type: 'text' as 'text',
                             isLanguages: true,
                         },
@@ -125,22 +91,23 @@ export default function Category() {
                             type: 'text' as 'text',
                             isLanguages: true,
                         },
+                        {
+                            Title: 'image',
+                            name: 'image',
+                            type: 'single_img' as 'single_img',
+                        },
                     ]}
                     initialvalues={
-                        id === 0
-                            ? {}
-                            : reverseTransformObject(
-                                  category.find((item: any) => item._id === id)
-                              )
+                        id === 0 ? {} : reverseTransformObject(Hero[0])
                     }
                     handleSubmit={handleSubmit}
                 />
             ) : (
                 <div className="">
                     <h1 className="text-2xl font-bold  text-start p-10 pb-0">
-                        category{' '}
+                        Contact Bunner{' '}
                     </h1>
-                    {category && (
+                    {Hero && (
                         <TableDemo
                             structure={[
                                 {
@@ -149,8 +116,8 @@ export default function Category() {
                                     type: 'str',
                                 },
                                 {
-                                    HeadTitle: 'name',
-                                    key: ['name', lang],
+                                    HeadTitle: 'title',
+                                    key: ['title', lang],
                                     type: 'str',
                                 },
                                 {
@@ -158,11 +125,16 @@ export default function Category() {
                                     key: ['description', lang],
                                     type: 'str',
                                 },
+                                {
+                                    HeadTitle: 'image',
+                                    key: ['image'],
+                                    type: 'img',
+                                },
                             ]}
-                            data={category as any}
-                            onAdd={() => {
-                                setIsForumOpen(true);
-                            }}
+                            data={Hero as any}
+                            // onAdd={() => {
+                            //     setIsForumOpen(true);
+                            // }}
                             onEdit={(id) => {
                                 setIsForumOpen(true);
                                 setid(id);
@@ -175,27 +147,6 @@ export default function Category() {
                     )}
                 </div>
             )}
-            <DeleteModal
-                isOpen={isDeletemodalOpen}
-                onDelete={async () => {
-                    await instanceAxios
-                        .delete(`seo/${id}`)
-                        .then(() => {
-                            toast.success('meta sucsesfully deleted');
-                            setIsDeletemodalOpen(false);
-                            queryClient.invalidateQueries({
-                                queryKey: ['seo'],
-                            });
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            toast.error(error.response.data.error);
-                        });
-                }}
-                onCancel={() => {
-                    setIsDeletemodalOpen(false);
-                }}
-            />
         </div>
     );
 }

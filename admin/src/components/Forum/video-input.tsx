@@ -11,7 +11,7 @@ interface VideoInputProps {
     title: string;
     multiple?: boolean;
     onChange: (files: File[] | null) => void;
-    value?: File[] | null;
+    value?: File[] | string | string[] | null;
 }
 
 export function VideoInput({
@@ -24,7 +24,21 @@ export function VideoInput({
     const [previews, setPreviews] = useState<string[]>([]);
     const [playing, setPlaying] = useState<{ [key: number]: boolean }>({});
     const videoRefs = useRef<{ [key: number]: HTMLVideoElement }>({});
-    console.log(value);
+
+    useEffect(() => {
+        // Convert string or array of strings to previews
+        if (typeof value === 'string') {
+            setPreviews([value]);
+        } else if (Array.isArray(value)) {
+            setPreviews(
+                value.map((file) =>
+                    file instanceof File ? URL.createObjectURL(file) : file
+                )
+            );
+        } else {
+            setPreviews([]);
+        }
+    }, [value]);
 
     useEffect(() => {
         // Cleanup old previews
@@ -86,12 +100,6 @@ export function VideoInput({
         }
     };
 
-    // const formatDuration = (seconds: number) => {
-    //     const minutes = Math.floor(seconds / 60);
-    //     const remainingSeconds = Math.floor(seconds % 60);
-    //     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-    // };
-
     const formatFileSize = (bytes: number) => {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -103,7 +111,6 @@ export function VideoInput({
     return (
         <div className="space-y-4">
             <div className="flex flex-col gap-2">
-                {/* <Label htmlFor={name}>{title}</Label> */}
                 <Input
                     id={name}
                     name={name}
@@ -115,11 +122,11 @@ export function VideoInput({
                 />
             </div>
 
-            {videos.length > 0 && (
+            {previews.length > 0 && (
                 <div className="grid gap-4">
-                    {videos.map((file, index) => (
+                    {previews.map((src, index) => (
                         <div
-                            key={`${file.name}-${index}`}
+                            key={`${src}-${index}`}
                             className="flex flex-col gap-4 p-4 rounded-lg border bg-muted/40"
                         >
                             <div className="relative aspect-video w-full overflow-hidden rounded-md bg-background">
@@ -127,7 +134,7 @@ export function VideoInput({
                                     ref={(el) => {
                                         if (el) videoRefs.current[index] = el;
                                     }}
-                                    src={previews[index]}
+                                    src={src}
                                     className="h-full w-full"
                                     onLoadedMetadata={(e) => {
                                         const video = e.currentTarget;
@@ -154,11 +161,14 @@ export function VideoInput({
                             <div className="flex items-center justify-between gap-4">
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium truncate">
-                                        {file.name}
+                                        {videos[index]?.name ||
+                                            `Video ${index + 1}`}
                                     </p>
-                                    <p className="text-sm text-muted-foreground">
-                                        {formatFileSize(file.size)}
-                                    </p>
+                                    {videos[index] && (
+                                        <p className="text-sm text-muted-foreground">
+                                            {formatFileSize(videos[index].size)}
+                                        </p>
+                                    )}
                                 </div>
                                 <Button
                                     type="button"
