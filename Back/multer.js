@@ -58,7 +58,7 @@ const dynamicFileMiddleware = async (req, res, next) => {
         try {
             const uploadDir = path.resolve(__dirname, 'uploads');
             const baseUrl =
-                process.env.BASE_URL || 'https://buy-me-now-back.onrender.com/';
+                process.env.BASE_URL || 'https://buy-me-now-back.onrender.com';
 
             for (const key in req.files) {
                 const fileData = req.files[key];
