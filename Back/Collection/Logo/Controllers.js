@@ -32,13 +32,22 @@ const Edit = async (req, res) => {
             updatedTranslation,
         });
     } catch (error) {
-        res.status500().json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
 const Read = async (req, res) => {
     try {
         const Seo = await Schema.find({});
+        res.status(200).json(Seo);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+const ReadLogo = async (req, res) => {
+    try {
+        const Seo = await Schema.find({});
+
         res.status(200).json(Seo);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -63,4 +72,4 @@ const Delete = async (req, res) => {
     }
 };
 
-module.exports = { Create, Read, Delete, Edit };
+module.exports = { Create, Read, ReadLogo, Delete, Edit };

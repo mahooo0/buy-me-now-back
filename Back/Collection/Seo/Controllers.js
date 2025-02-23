@@ -1,3 +1,4 @@
+const getLocalizedData = require('../../getLocalizedData');
 const Schema = require('./Shema'); // Ensure this matches your model file name
 
 const Create = async (req, res) => {
@@ -36,7 +37,7 @@ const Edit = async (req, res) => {
             updatedTranslation,
         });
     } catch (error) {
-        res.status500().json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -66,5 +67,18 @@ const Delete = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+const ReadSEo = async (req, res) => {
+    try {
+        const lang = req.headers['accept-language'] || 'az'; // Get the language from headers
 
-module.exports = { Create, Read, Delete, Edit };
+        const Seo = await Schema.find({});
+        const result = Seo.map((data) => {
+            return getLocalizedData(data, lang);
+        });
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { Create, Read, Delete, Edit, ReadSEo };

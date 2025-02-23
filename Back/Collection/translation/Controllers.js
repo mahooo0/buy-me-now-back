@@ -29,25 +29,13 @@ const Edit = async (req, res) => {
             updatedTranslation,
         });
     } catch (error) {
-        res.status500().json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 const ReadAdmin = async (req, res) => {
     try {
         const translations = await Schema.find({});
         res.status(200).json(translations);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-const Read = async (req, res) => {
-    try {
-        const translations = await Schema.find({});
-        const result = translations.reduce((acc, item) => {
-            acc[item.key] = item.value;
-            return acc;
-        }, {});
-        res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -70,5 +58,19 @@ const Delete = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+//api
 
-module.exports = { Create, Read, ReadAdmin, Delete, Edit };
+const Read_Translation = async (req, res) => {
+    try {
+        const translations = await Schema.find(); // Find translations by language
+        const lang = req.headers['accept-language']; // Get the language from headers
+        const result = translations.reduce((acc, item) => {
+            acc[item.key] = item.value[lang]; // Add the translation to the result object
+            return acc;
+        }, {});
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+module.exports = { Create, Read_Translation, ReadAdmin, Delete, Edit };
